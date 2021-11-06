@@ -16,10 +16,8 @@ __version__ = "1.0.0"
 import re
 
 __all__ = [
-    "is_email_valid", "is_phone_valid",
-    "name_validation", "is_amount_valid",
+    "is_email_valid", "is_phone_valid", "is_amount_valid",
     "is_valid_url", "date_validation",
-    "is_sol_email_valid",
 ]
 
 
@@ -55,22 +53,6 @@ def is_email_valid(email: str) -> bool:
         return False
 
 
-def is_sol_email_valid(email: str) -> bool:
-    """
-    Check email is valid of not
-    :return: True or False
-    :rtype: bool
-    """
-    if email:
-        email_regex = re.compile(r'^[a-zA-Z0-9_\-.]+@me-solshare.com$')
-        if not email_regex.match(email):
-            return False
-        else:
-            return True
-    else:
-        return False
-
-
 def is_amount_valid(amount: str) -> bool:
     """
     :param amount:
@@ -98,53 +80,6 @@ def is_valid_url(url: str) -> bool:
         return True
     except ValidationError as err:
         print(err)
-        return False
-
-
-def name_validation(name: str, *args) -> bool:
-    """
-    Description: Use proper name.The character should use alphanumerics. You can't use any special characters. Such as
-    './%^' etc
-
-    Example:
-    In [19]: from app_libs.validators import name_validation
-    In [20]: name_validation(name='vubon')
-    Out[20]: True
-
-    or You can use
-    Example:
-    In [21]: name_validation(name='vubon roy')
-    Out[21]: True
-
-    You can pass tuple data for validation
-    Example:
-    In [2]: name_validation(*("vubon roy", "Jamuna bank"))
-    Out[2]: True
-
-    But You can't use any special characters
-    Example:
-    In [13]: name_validation(' $vubon roy ')
-    Out[13]: False
-
-    :param name:
-    :return:  True or False
-    :rtype
-    """
-    try:
-        if args:
-            for name in args:
-                all_characters = "".join(name.split())
-                if all_characters.isalnum():
-                    return True
-                return False
-        if name:
-            all_characters = "".join(name.split())
-            if all_characters.isalnum():
-                return True
-            return False
-
-        return False
-    except ValueError:
         return False
 
 

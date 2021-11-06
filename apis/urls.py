@@ -7,5 +7,5 @@ from django.urls import path, include
 
 # Put here all apps url 
 urlpatterns = [
-    path('users/', include('apps.users.urls')),
+    path('users/', include('apps.user.urls')),
 ]

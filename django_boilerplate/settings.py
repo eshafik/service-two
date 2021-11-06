@@ -56,21 +56,31 @@ THIRD_PARTY = [
     'corsheaders',
 ]
 SYSTEM_APPS = [
-    'apps.users',
+    'apps.user',
 ]
 
 INSTALLED_APPS += THIRD_PARTY + SYSTEM_APPS
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+DEFAULT_MIDDLEWARE = [
+    # 'django.middleware.security.SecurityMiddleware',
+    # 'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django.contrib.messages.middleware.MessageMiddleware',
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+ON_TOP_MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware', ]
+
+
+THIRD_PARTY_MIDDLEWARE = []
+
+SERVICE_MIDDLEWARE = [
+    'base.middleware.AuthMiddleware',
+]
+
+MIDDLEWARE = ON_TOP_MIDDLEWARE + DEFAULT_MIDDLEWARE + THIRD_PARTY_MIDDLEWARE + SERVICE_MIDDLEWARE
 
 ROOT_URLCONF = 'django_boilerplate.urls'
 
@@ -95,7 +105,7 @@ WSGI_APPLICATION = 'django_boilerplate.wsgi.application'
 # FIREBASE_GET_REFRESH_TOKEN = env("FIREBASE_GET_REFRESH_TOKEN")
 # FIREBASE_WEB_KEY = env("FIREBASE_WEB_KEY")
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'user.User'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -151,10 +161,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-        'apps.users.permissions.UserPermission'
+        'apps.user.permissions.UserPermission',
     ),
     'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
+        'apis.renderers.DefaultRenderer',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
@@ -169,6 +179,8 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'base.pagination.CustomPagination',
+    'PAGE_SIZE': 10,
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 

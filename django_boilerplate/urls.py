@@ -22,8 +22,8 @@ from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include("api.urls")),
+    path('apis/v1/', include("apis.urls")),
     path('docs/', include_docs_urls(title='Hello world')),
 ]
 
-handler404 = 'apps.users.views.error404'
+handler404 = 'apps.user.views.error404'
