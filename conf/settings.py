@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
 THIRD_PARTY = [
     'rest_framework',
+    'rest_framework_simplejwt',
     'django_extensions',
     'corsheaders',
 ]
@@ -62,13 +63,13 @@ SYSTEM_APPS = [
 INSTALLED_APPS += THIRD_PARTY + SYSTEM_APPS
 
 DEFAULT_MIDDLEWARE = [
-    # 'django.middleware.security.SecurityMiddleware',
-    # 'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ON_TOP_MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware', ]
@@ -82,7 +83,7 @@ SERVICE_MIDDLEWARE = [
 
 MIDDLEWARE = ON_TOP_MIDDLEWARE + DEFAULT_MIDDLEWARE + THIRD_PARTY_MIDDLEWARE + SERVICE_MIDDLEWARE
 
-ROOT_URLCONF = 'django_boilerplate.urls'
+ROOT_URLCONF = 'conf.urls'
 
 TEMPLATES = [
     {
@@ -100,7 +101,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'django_boilerplate.wsgi.application'
+WSGI_APPLICATION = 'conf.wsgi.application'
 # FIREBASE_GET_TOKEN_ID = env("FIREBASE_GET_TOKEN_ID")
 # FIREBASE_GET_REFRESH_TOKEN = env("FIREBASE_GET_REFRESH_TOKEN")
 # FIREBASE_WEB_KEY = env("FIREBASE_WEB_KEY")
@@ -169,7 +170,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_MODEL_SERIALIZER_CLASS': (
         'rest_framework.serializers.ModelSerializer',

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-readonly virtual='/home/shafik/personal/django_boilerplate/venv/bin/activate'
+readonly virtual='/home/shafik/personal/conf/venv/bin/activate'
 source ${virtual}
 python manage.py runscript clean_database_tables
 python manage.py makemigrations
