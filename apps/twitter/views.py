@@ -21,7 +21,7 @@ class FeedDataListAPI(ListAPIView):
     def get_queryset(self):
         with self.tracer.start_as_current_span('postgres_db_query') as span:
             if self.request.query_params.get('type') == 'delay':
-                time.sleep(1)
+                time.sleep(6)
             queryset = FeedPost.objects.all()
             span.set_attribute('sql queries', print(queryset.query))
             return queryset
