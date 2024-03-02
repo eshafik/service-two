@@ -48,8 +48,7 @@ def callback(ch, method, properties, body):
     with tracer.start_as_current_span("consume_message", context=context) as span:
         span.set_attribute("data", body)
         all_data = json.loads(body.decode('utf-8'))
-        # tracer = trace.get_tracer(__name__)
-        # with tracer.start_as_current_span('mongo_insertion'):
-        insert_data(all_data.get('data'))
+        if all_data.get('data'):
+            insert_data(all_data.get('data'))
         # Acknowledge the message
         ch.basic_ack(delivery_tag=method.delivery_tag)
