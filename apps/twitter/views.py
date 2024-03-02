@@ -11,7 +11,6 @@ from rest_framework.generics import ListAPIView
 
 from apps.twitter.models import FeedPost
 from apps.twitter.serializer import FeedPostSerializer
-from conf.settings import redis_instance
 
 
 class FeedDataListAPI(ListAPIView):

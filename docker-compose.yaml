@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  service_one:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    ports:
+      - "8002:8000"
+    environment:
+      - .env
+    volumes:
+      - .:/code
+    extra_hosts:
+      - host.docker.internal:host-gateway
+  rabbit-consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+        sh -c "python manage.py startconsumer"
+    restart: always
+    environment:
+      - .env
+    volumes:
+      - .:/code
+    extra_hosts:
+      - host.docker.internal:host-gateway
