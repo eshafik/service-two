@@ -45,13 +45,10 @@ def callback(ch, method, properties, body):
     print("---"*100)
     print("context", context)
     # Continue the trace using the extracted context
-    with tracer.start_as_current_span("consume_message", context=context):
-        print(f"Received {body}")
-        print("==="*100)
-        print(f" [x] Received {body}")
+    with tracer.start_as_current_span("consume_message", context=context) as span:
+        span.set_attribute("data", body)
         all_data = json.loads(body.decode('utf-8'))
-        print("all_data", all_data)
-        tracer = trace.get_tracer(__name__)
+        # tracer = trace.get_tracer(__name__)
         # with tracer.start_as_current_span('mongo_insertion'):
         insert_data(all_data.get('data'))
         # Acknowledge the message
